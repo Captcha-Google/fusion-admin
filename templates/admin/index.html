@@ -14,6 +14,17 @@
     }
   </style>
 {% endblock %}
+
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
+      <li class="breadcrumb-item active"></li>
+    </ol>
+  </nav>
+{% endblock %}
+
 {% block content %}
         <div class="row">
             <div class="col-xl-6 col-xxl-5 d-flex">
@@ -252,7 +263,7 @@
                                     <tbody>
                                         {% for model in app.models %}
                                         <tr>
-                                            <th>
+                                            <th colspan="3">
                                                 <span class="h5">{{ model.name }} </span>
                                                 <span class="badge badge-success-light"></span>           
                                             </th>

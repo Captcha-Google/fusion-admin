@@ -9,3 +9,6 @@ def fusion_installation(request):
 
 def fusion_documentation(request):
     return HttpResponse("Fusion Documentation Application")
+
+def custom_page(request):
+    return render(request, "admin/custom_page.html")

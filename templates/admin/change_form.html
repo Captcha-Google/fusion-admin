@@ -6,6 +6,40 @@
 <link href="{% static 'admin/css/forms.css' %}" rel="stylesheet">
 {% endblock %}
 
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
+    <li class="breadcrumb-item" aria-current="page">
+      <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+    </li>
+
+    {% if has_view_permission %}
+    <li class="breadcrumb-item" aria-current="page">
+      <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+    </li>
+    {% else %}
+      {{ opts.verbose_name_plural|capfirst }}
+    {% endif %}
+
+
+    {% if add %}
+      {% blocktranslate with name=opts.verbose_name %}
+      
+      <li class="breadcrumb-item" aria-current="page"><a href="#">Add {{ name }}{% endblocktranslate %}</a></li>
+
+    {% else %}
+      <li class="breadcrumb-item active" aria-current="page">
+        <a href="#">{{ original|truncatewords:"18" }}</a>
+      </li>
+    {% endif %}
+  </ol>
+</nav>
+{% endblock %}
+{% endif %}
+
 {% block content %}
 
       {% block object-tools %}

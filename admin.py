@@ -16,4 +16,4 @@ class AdminFusionConfiguration(admin.ModelAdmin):
 
 admin.site.register(FusionConfiguration,AdminFusionConfiguration)
 admin.site.register(SiteVisitor,AdminSiteVisitor)
-fusion_site = FusionAdmin(name="Fusion")
+

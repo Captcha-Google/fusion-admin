@@ -1,10 +1,11 @@
 from django.urls import path, re_path
-from .views import fusion_installation,fusion_homepage,fusion_documentation
+from .views import fusion_installation,fusion_homepage,fusion_documentation,custom_page
 
 urlpatterns = [
     path('',fusion_homepage, name="home_page"),
     path('documentation/',fusion_documentation, name="documentation"),
     path('installation/',fusion_installation, name="installation"),
+    path('custom_page/',custom_page, name="custom_page"),
 ]
 
 

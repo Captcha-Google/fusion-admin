@@ -34,6 +34,8 @@
 		{% include 'admin/includes/navbar.html' %}
 		<main class="content">
 			<div class="container-fluid p-0">
+				{% block breadcrumbs %}{% endblock %}
+
 				{% block pretitle %}{% endblock %}
 				{% block content_title %}
 					{% if title %}
