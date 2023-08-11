@@ -1,0 +1,43 @@
+th a {
+    color: #495057;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+th a:hover {
+    --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
+    text-decoration: none;
+    font-weight: 600;
+}
+summary{
+    color: #495057;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+ul li a {
+    color: #495057;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+ul li a:hover {
+    --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+.timeline-item a {
+    color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.timeline-item a {
+    -bs-link-color-rgb: var(--bs-link-hover-color-rgb);
+    text-decoration: none;
+}

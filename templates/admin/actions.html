@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load static %}
+
+
+{% block actions %}
+  <div class="col-9">
+    <div class="d-flex justify-content-start gap-3 mt-4 mb-4">
+        {% block actions-form %}
+        {% for field in action_form %}
+          <style>
+            select[name=action]{
+              width: 32%;
+            }
+          </style>
+          {% if field.label %}
+            {{ field }}
+          {% else %}
+            {{ field }}
+          {% endif %}
+        {% endfor %}
+      {% endblock %}
+
+      {% block actions-submit %}
+        <button type="submit" class="btn btn-pill btn-primary" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">{% translate "Go" %}</button>
+      {% endblock %}
+    </div>
+</div>
+
+{% endblock %}

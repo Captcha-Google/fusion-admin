@@ -1,0 +1,16 @@
+{% if app_list %}
+    {% for app in app_list %}
+    <div class="col-md-12 col-xxl-12">
+        <div class="dropdown-mega-list">
+            <div class="dropdown-header">{{ app.name }}</div>
+            {% for app in app.models %}
+            <a class="dropdown-item" href="{{ app.add_url }}">{{ app.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="dropdown-mega-list">
+        <div class="dropdown-header">No Application installed</div>
+    </div>
+{% endif %}

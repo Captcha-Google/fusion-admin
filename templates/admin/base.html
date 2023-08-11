@@ -1,0 +1,244 @@
+{% load i18n static %}
+{% load static %}
+{% load i18n admin_urls static admin_modify %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="keywords" content="">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="{% static 'admin/img/icons/icon-48x48.png' %}" />
+	<title>{% block title %}{% endblock %}</title>
+	<link href="{% static 'admin/css/light.css' %}" rel="stylesheet">
+	<script src="{% static 'admin/js/filters.js' %}" defer></script>
+	<link href="{% static 'admin/css/table_font.css' %}" rel="stylesheet">
+	<link href="{% static 'admin/css/forms.css' %}" rel="stylesheet">
+	<link href="{% static 'admin/css/checkbox.css' %}" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+	{% block extrastyle %}
+	{% endblock %}
+	{% block extrahead %}
+	{% endblock %}
+</head>
+
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+<div class="wrapper">
+		{% block nav-sidebar %}
+			{% include 'admin/nav_sidebar.html'%}
+		{% endblock %}
+	<div class="main">
+		{% include 'admin/includes/navbar.html' %}
+		<main class="content">
+			<div class="container-fluid p-0">
+				{% block pretitle %}{% endblock %}
+				{% block content_title %}
+					{% if title %}
+						<h1 class="h3 mb-3">{{ title }}</h1>
+					{% endif %}
+				{% endblock %}
+				
+				{% block content_subtitle %}
+					{% if subtitle %}
+						<h2 class="h3 mb-3">{{ subtitle }}</h2>
+					{% endif %}
+				{% endblock %}
+				
+				{% block content %}{% endblock %}
+			</div>
+		</main>
+		{% block footer %}
+			{% include 'admin/widgets/footer.html' %}
+		{% endblock %}
+		
+	</div>
+</div>
+
+<script src="{% static 'admin/js/app.js' %}"></script>
+<script src="{% static 'admin/js/datatables.js' %}"></script>
+<script src="{% static 'admin/js/actions.js' %}"></script>
+<script src="{% static 'admin/js/date-picker.js' %}"></script>
+<script src="{% url 'admin:jsi18n' %}"></script>
+<script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+<script src="{% static 'admin/js/jquery.init.js' %}"></script>
+<script src="{% static 'admin/js/core.js' %}"></script>
+<script src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+<script src="{% static 'admin/js/SelectBox.js' %}"></script>
+<script src="{% static 'admin/js/actions.js' %}"></script>
+<script src="{% static 'admin/js/SelectFilter2.js' %}"></script>
+<script src="{% static 'admin/js/urlify.js' %}"></script>
+<script src="{% static 'admin/js/prepopulate.js' %}"></script>
+<script src="{% static 'admin/js/vendor/xregexp/xregexp.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	var table = $("#result_list").DataTable({
+		fixedHeader: true,
+		"lengthChange": false,
+		"searching": false,
+		"columnDefs": [{
+			"targets": [0],
+			"orderable": false,
+			"width": "40px",
+		}],
+	});
+
+	var table_1 = $("#result_list1").DataTable({
+		"searching": false,
+		"lengthChange": false,
+	});
+
+	$('table#result_list thead th:first-child').removeClass('action-checkbox-column sorting_disabled sorting_asc');
+	$('table#result_list tbody tr:last-child td:first-child').addClass("border-bottom");
+
+	$('table#result_list tbody tr td input[type=checkbox]').addClass("form-check-input")
+	$('table#result_list thead tr th input[type=checkbox]').addClass("form-check-input")
+	$("select[name=action]").addClass("form-select")
+
+
+	$('input[type=checkbox]').addClass("form-check-input")
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+	var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+	gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+	gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+	new Chart(document.getElementById("chartjs-dashboard-line"), {
+		type: "line",
+		data: {
+			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+			datasets: [{
+				label: "Sales ($)",
+				fill: true,
+				backgroundColor: gradient,
+				borderColor: window.theme.primary,
+				data: [
+					2115,
+					1562,
+					1584,
+					1892,
+					1587,
+					1923,
+					2566,
+					2448,
+					2805,
+					3438,
+					2917,
+					3327
+				]
+			}]
+		},
+		options: {
+			maintainAspectRatio: false,
+			legend: {
+				display: false
+			},
+			tooltips: {
+				intersect: false
+			},
+			hover: {
+				intersect: true
+			},
+			plugins: {
+				filler: {
+					propagate: false
+				}
+			},
+			scales: {
+				xAxes: [{
+					reverse: true,
+					gridLines: {
+						color: "rgba(0,0,0,0.0)"
+					}
+				}],
+				yAxes: [{
+					ticks: {
+						stepSize: 1000
+					},
+					display: true,
+					borderDash: [3, 3],
+					gridLines: {
+						color: "rgba(0,0,0,0.0)"
+					}
+				}]
+			}
+		}
+	});
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	new Chart(document.getElementById("chartjs-dashboard-pie"), {
+		type: "pie",
+		data: {
+			labels: ["Chrome", "Firefox", "IE"],
+			datasets: [{
+				data: [4306, 3801, 1689],
+				backgroundColor: [
+					window.theme.primary,
+					window.theme.warning,
+					window.theme.danger
+				],
+				borderWidth: 5
+			}]
+		},
+		options: {
+			responsive: !window.MSInputMethodContext,
+			maintainAspectRatio: false,
+			legend: {
+				display: false
+			},
+			cutoutPercentage: 75
+		}
+	});
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	new Chart(document.getElementById("chartjs-dashboard-bar"), {
+		type: "bar",
+		data: {
+			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+			datasets: [{
+				label: "This year",
+				backgroundColor: window.theme.primary,
+				borderColor: window.theme.primary,
+				hoverBackgroundColor: window.theme.primary,
+				hoverBorderColor: window.theme.primary,
+				data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
+				barPercentage: .75,
+				categoryPercentage: .5
+			}]
+		},
+		options: {
+			maintainAspectRatio: false,
+			legend: {
+				display: false
+			},
+			scales: {
+				yAxes: [{
+					gridLines: {
+						display: false
+					},
+					stacked: false,
+					ticks: {
+						stepSize: 20
+					}
+				}],
+				xAxes: [{
+					stacked: false,
+					gridLines: {
+						color: "transparent"
+					}
+				}]
+			}
+		}
+	});
+});
+</script>
+</body>
+</html>

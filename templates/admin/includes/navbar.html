@@ -1,0 +1,85 @@
+{% load i18n static fusion admin_urls %}
+{% load static %}
+
+{% get_fusion_settings request as fusion_settings %}
+<nav class="navbar navbar-expand navbar-light navbar-bg">
+    <a class="sidebar-toggle js-sidebar-toggle">
+        <i class="hamburger align-self-center"></i>
+    </a>
+
+    <form class="d-none d-sm-inline-block">
+        <div class="input-group input-group-navbar">
+            <input type="text" class="form-control" placeholder="Search…" id="nav-filter" aria-label="Search">
+            <button class="btn" type="button">
+                <i class="align-middle" data-feather="search"></i>
+            </button>
+        </div>
+    </form>
+
+    <ul class="navbar-nav d-none d-lg-flex">
+        <li class="nav-item px-2 dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="megaDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Easy Navigation Menu
+            </a>
+            <div class="dropdown-menu dropdown-menu-start dropdown-mega" aria-labelledby="megaDropdown">
+                <div class="d-md-flex align-items-start justify-content-start">
+                    <div class="row">
+                        {% include '../widgets/easy_menu.html' %}
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Resources
+            </a>
+            <div class="dropdown-menu" aria-labelledby="resourcesDropdown">
+                <a class="dropdown-item" href="#" target="_blank"><i class="align-middle me-1" data-feather="github"></i>
+                    FusionAdmin Github</a>
+                <a class="dropdown-item" href="#" target="_blank"><i class="align-middle me-1" data-feather="book-open"></i>
+                    Documentation</a>
+                <a class="dropdown-item" href="#" target="_blank"><i class="align-middle me-1"
+                        data-feather="edit"></i> Changelog</a>
+            </div>
+        </li>
+    </ul>
+
+
+    <div class="navbar-collapse collapse">
+        <ul class="navbar-nav navbar-align">
+            <li class="nav-item">
+                <a class="nav-icon js-fullscreen d-none d-lg-block" href="#">
+                    <div class="position-relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-maximize align-middle"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                    <i class="align-middle" data-feather="settings"></i>
+                </a>
+
+                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+
+                {% if fusion_settings|has_fusion_setting:"user_avatar" %}
+                    <img src="{% get_user_avatar request.user %}" width="160px" class="img-circle elevation-2" alt="{% firstof user.get_short_name user.get_username %}">
+                {% else %}
+                    <img src="{% static 'admin/img/avatars/avatar.jpg' %}" class="avatar img-fluid rounded me-1" alt="{% firstof user.get_short_name user.get_username %}" /> 
+                {% endif %}
+            </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    {% block userlinks %}
+                    <a class="dropdown-item" href="{{ site_url }}"><i class="align-middle me-1" data-feather="eye"></i> View Site</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
+                    <a class="dropdown-item" href="{% url 'admin:password_change' %}"><i class="align-middle me-1" data-feather="lock"></i> Change Password</a>
+                    <a class="dropdown-item" href="{% url 'admin:logout' %}"><i class="align-middle me-1" data-feather="log-out"></i> Logout</a>
+                    {% endblock %}
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

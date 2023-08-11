@@ -1,0 +1,297 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_urls %}
+{% load fusion %}
+{% block extrastyle %}
+<style>
+    .card-body-scrollable {
+      max-height: 400px; /* Set the maximum height you desire */
+      overflow-y: auto;
+    }
+
+    .card-body-scrollable::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+        <div class="row">
+            <div class="col-xl-6 col-xxl-5 d-flex">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Staff Users</h5>
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="users"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="mt-1 mb-3">12</h1>
+                                    <div class="mb-0">
+                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 12 </span>
+                                        <span class="text-muted">Staff users</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Visitors</h5>
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="users"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="mt-1 mb-3">14.212</h1>
+                                    <div class="mb-0">
+                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
+                                        <span class="text-muted">Since last week</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Applications</h5>
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="dollar-sign"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="mt-1 mb-3">7</h1>
+                                    <div class="mb-0">
+                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 7 </span>
+                                        <span class="text-muted">Applications is created</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Users</h5>
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="users"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="mt-1 mb-3">64</h1>
+                                    <div class="mb-0">
+                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
+                                        <span class="text-muted">Since last week</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-xxl-7">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Recent Movement</h5>
+                    </div>
+                    <div class="card-body py-3">
+                        <div class="chart chart-sm">
+                            <canvas id="chartjs-dashboard-line"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Recent Actions</h5>
+                    </div>
+                    <div class="card-body px-4 card-body-scrollable">
+                        <strong>Activity</strong>
+                        {% load log %}
+                        {% get_admin_log 10 as admin_log for_user user %}
+                        {% if not admin_log %}
+                        <strong>None available</strong>
+                        {% else %}
+                        <ul class="timeline mt-2 mb-0">
+                        {% for entry in admin_log %}
+                        <li class="timeline-item {% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                            {% if entry.is_deletion or not entry.get_admin_url %}
+                                {{ entry.object_repr }}
+                            {% else %}
+                                <span class="float-end text-muted text-sm">{{ entry.action_time|date:"TIME_FORMAT" }}</span>
+                                <a href="{{ entry.get_admin_url }}">
+                                    <strong id="entry_name">{{ entry.object_repr }}</strong>
+                                </a>
+                            {% endif %}
+                            <br>
+                            {% if entry.content_type %}
+                                <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+                            {% else %}
+                                <strong>Unknown content</strong>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Monthly Users</h5>
+                    </div>
+                    <div class="card-body d-flex">
+                        <div class="align-self-center chart chart-lg">
+                            <canvas id="chartjs-dashboard-bar"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
+                <div class="card flex-fill">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Calendar</h5>
+                    </div>
+                    <div class="card-body d-flex">
+                        <div class="align-self-center w-100">
+                            <div class="chart">
+                                <div id="datetimepicker-dashboard"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <div class="row">
+            <div class="col-12 col-lg-12 col-xxl-3 d-flex">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Users Browser</h5>
+                    </div>
+                        <div class="align-self-center w-100">
+                            <div class="py-3">
+                                <div class="chart chart-xs">
+                                    <canvas id="chartjs-dashboard-pie"></canvas>
+                                </div>
+                            </div>
+
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td><i class="text-primary fa-fw" data-feather="chrome"></i> Chrome <span
+                                                class="badge badge-success-light">+12%</span></td>
+                                        <td class="text-end">4306</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="text-warning fa-fw" data-feather="globe"></i> Firefox <span
+                                                class="badge badge-danger-light">-3%</span></td>
+                                        <td class="text-end">3801</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="text-danger fa-fw" data-feather="globe"></i> Edge</td>
+                                        <td class="text-end">1689</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="text-dark fa-fw" data-feather="globe"></i> Other</td>
+                                        <td class="text-end">3251</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xxl-9 d-flex">
+                <div class="w-100">
+                    <div class="row">
+                        {% if app_list %}
+                        {% for app in app_list %}
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col mt-3">
+                                        <span class="card-header h5">{{ app.name }}</span>
+                                    </div>
+
+                                    <div class="col-auto m-3">
+                                        <div class="stat text-primary">
+                                            <i class="align-middle" data-feather="box"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <table class="table table-borderless table-striped mt-2">
+                                    <tbody>
+                                        {% for model in app.models %}
+                                        <tr>
+                                            <th>
+                                                <span class="h5">{{ model.name }} </span>
+                                                <span class="badge badge-success-light"></span>           
+                                            </th>
+                                            {% if model.add_url %}
+                                            <th>
+                                                <a href="{{ model.add_url }}" class="addlink btn btn-pill btn-primary btn-sm">  {% translate 'Add' %}
+                                                </a>
+                                            </th>
+                                            {% else %}
+                                            <th></th>
+                                            {% endif %}
+
+                                            {% if model.admin_url %}
+                                                {% if model.view_only %}
+                                                    <th>
+                                                        <a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a>
+                                                    </th>
+                                                {% else %}
+                                                    <th>
+                                                        <a href="{{ model.admin_url }}" class="changelink btn btn-pill btn-success btn-sm">{% translate 'Change' %}</a>
+                                                    </th>
+                                                {% endif %}
+
+                                                {% elif show_changelinks %}
+                                                <th></th>
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <h2>No available app</h2>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

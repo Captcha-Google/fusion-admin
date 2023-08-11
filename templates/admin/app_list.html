@@ -1,0 +1,22 @@
+{% for app in app_list %}
+    <li class="sidebar-header">
+        {{ app.name }}
+    </li>
+
+    {% for model in app.models %}
+        {% if model.admin_url %}
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ model.admin_url }}">
+                <i class="align-middle" data-feather="box"></i> <span class="align-middle">{{ model.name }}</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ model.url }}">
+                <i class="align-middle" data-feather="box"></i> <span class="align-middle">{{ model.name }}</span>
+            </a>
+        </li>
+        {% endif %}
+    {% endfor %}
+
+{% endfor %}

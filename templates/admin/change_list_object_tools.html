@@ -1,0 +1,18 @@
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+    {% if has_add_permission %}
+      {% url cl.opts|admin_urlname:'add' as add_url %}
+    
+        <div class="position-relative">
+          <div class="position-absolute top-0 end-0">
+            <a href="{% add_preserved_filters add_url is_popup to_field %}" class="btn btn-pill btn-success btn-lg">
+              <span class="align-middle">
+                {% blocktranslate with cl.opts.verbose_name as name %}Create {{ name }}{% endblocktranslate %}
+              </span>
+              <i class="align-middle" data-feather="plus-circle"></i>
+            </a>
+          </div>
+        </div>
+    {% endif %}
+{% endblock %}
