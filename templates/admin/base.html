@@ -34,7 +34,6 @@
 		{% include 'admin/includes/navbar.html' %}
 		<main class="content">
 			<div class="container-fluid p-0">
-				{% block breadcrumbs %}{% endblock %}
 
 				{% block pretitle %}{% endblock %}
 				{% block content_title %}
@@ -48,6 +47,8 @@
 						<h2 class="h3 mb-3">{{ subtitle }}</h2>
 					{% endif %}
 				{% endblock %}
+				
+				{% block breadcrumbs %}{% endblock %}
 				
 				{% block content %}{% endblock %}
 			</div>
