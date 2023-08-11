@@ -60,23 +60,20 @@
   {% endblock %}
 {% endif %}
 
+{% block object-tools %}
+  {% block object-tools-items %}
+    {% change_list_object_tools %}
+  {% endblock %}
+{% endblock %}
+
 {% block content %}
   <div id="content-main">
-    {% block object-tools %}
-        <ul class="object-tools">
-          {% block object-tools-items %}
-            {% change_list_object_tools %}
-          {% endblock %}
-        </ul>
-    {% endblock %}
-
     {% if cl.formset and cl.formset.errors %}
         <p class="errornote">
         {% blocktranslate count counter=cl.formset.total_error_count %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
         </p>
         {{ cl.formset.non_form_errors }}
     {% endif %}
-
     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
       <div class="changelist-form-container">
         {% block search %}

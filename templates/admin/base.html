@@ -35,6 +35,10 @@
 		<main class="content">
 			<div class="container-fluid p-0">
 
+				{% block object-tools %}{% endblock %}
+
+				{% block easy-menu %}{% endblock %}
+			
 				{% block pretitle %}{% endblock %}
 				{% block content_title %}
 					{% if title %}
@@ -47,6 +51,7 @@
 						<h2 class="h3 mb-3">{{ subtitle }}</h2>
 					{% endif %}
 				{% endblock %}
+
 				
 				{% block breadcrumbs %}{% endblock %}
 				

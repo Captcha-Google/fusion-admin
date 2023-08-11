@@ -25,7 +25,9 @@
             <div class="dropdown-menu dropdown-menu-start dropdown-mega" aria-labelledby="megaDropdown">
                 <div class="d-md-flex align-items-start justify-content-start">
                     <div class="row">
-                        {% include '../widgets/easy_menu.html' %}
+                        {% block easy-menu %}
+                            {% include '../widgets/easy_menu.html' %}
+                        {% endblock %}
                     </div>
                 </div>
             </div>
