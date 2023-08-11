@@ -17,12 +17,14 @@
 
 
 {% block breadcrumbs %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
-      <li class="breadcrumb-item active"></li>
+<div class="card d-flex justify-content-end align-items-start p-1">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-2">
+      <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
+      <li class="breadcrumb-item active">{% translate 'Dashboard' %}</li>
     </ol>
   </nav>
+</div>
 {% endblock %}
 
 {% block content %}
