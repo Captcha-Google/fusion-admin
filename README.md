@@ -11,7 +11,12 @@ Fusion Admin Kit - is a django plugin in creating a modern UI for admin panel wi
 - With a django users visualization (Graphs)
 - Modern UI
 - Easy navigation
-- and more
+- Visulization of the monthly users
+- Management Information System
+- Recent Actions (Logs)
+- Calendar
+- Visulization of the Users Browsers
+- Secure Authentication
 
 ## Technology used
 
